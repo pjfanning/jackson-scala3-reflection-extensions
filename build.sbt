@@ -1,8 +1,8 @@
 name := "jackson-scala-reflection-extensions"
 
-version := "2.13.0-SNAPSHOT"
+ThisBuild / version := "2.13.0-SNAPSHOT"
 
-scalaVersion := "3.0.2"
+ThisBuild / scalaVersion := "3.0.2"
 
 val jacksonVersion = "2.13.0"
 
@@ -11,4 +11,25 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
   "co.blocke" %% "scala-reflection" % "1.0.0",
   "org.scalatest" %% "scalatest" % "3.2.10" % Test
+)
+
+ThisBuild / githubWorkflowJavaVersions := Seq("zulu@1.8")
+ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
+ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
+ThisBuild / githubWorkflowPublishTargetBranches := Seq(
+  RefPredicate.Equals(Ref.Branch("main")),
+  RefPredicate.StartsWith(Ref.Tag("v"))
+)
+
+ThisBuild / githubWorkflowPublish := Seq(
+  WorkflowStep.Sbt(
+    List("ci-release"),
+    env = Map(
+      "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
+      "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
+      "SONATYPE_PASSWORD" -> "${{ secrets.CI_DEPLOY_PASSWORD }}",
+      "SONATYPE_USERNAME" -> "${{ secrets.CI_DEPLOY_USERNAME }}",
+      "CI_SNAPSHOT_RELEASE" -> "+publishSigned"
+    )
+  )
 )
