@@ -14,7 +14,7 @@ import org.scalatest.matchers.should.Matchers
 import java.io.{ByteArrayInputStream, File, InputStreamReader}
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
-import scala.collection.JavaConverters.*
+import scala.jdk.CollectionConverters.*
 
 object ScalaReflectionExtensionsTest {
   private class PublicView
