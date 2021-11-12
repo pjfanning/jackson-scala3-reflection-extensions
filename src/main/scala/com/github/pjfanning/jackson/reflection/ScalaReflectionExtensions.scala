@@ -1,6 +1,7 @@
 package com.github.pjfanning.jackson.reflection
 
 import co.blocke.scala_reflection.RType
+import co.blocke.scala_reflection.impl.CollectionRType
 import co.blocke.scala_reflection.info.{ClassInfo, MapLikeInfo, ScalaOptionInfo, SeqLikeInfo}
 import com.fasterxml.jackson.core.{JsonParser, TreeNode}
 import com.fasterxml.jackson.databind.json.JsonMapper
@@ -214,10 +215,10 @@ trait ScalaReflectionExtensions {
         fieldInfo.fieldType match {
           case optionInfo: ScalaOptionInfo =>
             ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, optionInfo.optionParamType.infoClass)
-          case seqInfo: SeqLikeInfo =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, seqInfo.elementType.infoClass)
           case mapInfo: MapLikeInfo =>
             ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, mapInfo.elementType2.infoClass)
+          case seqInfo: CollectionRType =>
+            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, seqInfo.elementType.infoClass)
           case _ =>
         }
         fieldInfo.fieldType match {
