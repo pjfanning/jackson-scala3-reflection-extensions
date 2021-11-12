@@ -25,6 +25,15 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
     useSeqLong(v1.wrappedLongs.longs) shouldEqual w1.wrappedLongs.longs.sum
   }
 
+  it should "deserialize WrappedSeqLong with old style mix-in" in {
+    val mapper = new ObjectMapper with ScalaReflectionExtensions
+    val w1 = WrappedSeqLong("myText", SeqLong(Seq(100L, 100000000000000L)))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[WrappedSeqLong](t1)
+    v1 shouldEqual w1
+    useSeqLong(v1.wrappedLongs.longs) shouldEqual w1.wrappedLongs.longs.sum
+  }
+
   it should "deserialize WrappedSeqOptionLong" in {
     val mapper = newMapperWithScalaReflectionExtensions
     val w1 = WrappedSeqOptionLong("myText", SeqOptionLong(Seq(Some(100L), Some(100000000000000L), None)))
