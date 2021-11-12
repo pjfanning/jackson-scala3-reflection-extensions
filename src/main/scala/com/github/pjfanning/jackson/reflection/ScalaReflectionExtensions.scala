@@ -6,7 +6,8 @@ import com.fasterxml.jackson.core.{JsonParser, TreeNode}
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.{JavaType, MappingIterator, ObjectMapper, ObjectReader, ObjectWriter}
 import com.fasterxml.jackson.module.scala.{ClassTagExtensions, JavaTypeable}
-import _root_.com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospector
+import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospector
+import com.fasterxml.jackson.databind.`type`.{ArrayType, CollectionLikeType, ReferenceType}
 
 import java.io.{File, InputStream, Reader}
 import java.net.URL
@@ -190,11 +191,18 @@ trait ScalaReflectionExtensions {
 
   private def constructType[T: JavaTypeable]: JavaType = {
     val javaType = implicitly[JavaTypeable[T]].asJavaType(getTypeFactory)
-    val clazz = javaType.getRawClass
-    if (!registeredClasses.contains(clazz)) {
-      RType.of(clazz) match {
-        case classInfo: ClassInfo => registerInnerTypes(classInfo)
-        case _ =>
+    javaType match {
+      case rt: ReferenceType =>
+      case at: ArrayType =>
+      case ct: CollectionLikeType =>
+      case _ => {
+        val clazz = javaType.getRawClass
+        if (!registeredClasses.contains(clazz)) {
+          RType.of(clazz) match {
+            case classInfo: ClassInfo => registerInnerTypes(classInfo)
+            case _ =>
+          }
+        }
       }
     }
     javaType
