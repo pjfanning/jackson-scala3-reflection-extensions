@@ -1,4 +1,4 @@
-name := "jackson-scala-reflection-extensions"
+name := "jackson-scala3-reflection-extensions"
 
 ThisBuild / version := "2.13.0-SNAPSHOT"
 
