@@ -27,6 +27,7 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
 
   it should "deserialize WrappedSeqLong with old style mix-in" in {
     val mapper = new ObjectMapper with ScalaReflectionExtensions
+    mapper.registerModule(DefaultScalaModule)
     val w1 = WrappedSeqLong("myText", SeqLong(Seq(100L, 100000000000000L)))
     val t1 = mapper.writeValueAsString(w1)
     val v1 = mapper.readValue[WrappedSeqLong](t1)
