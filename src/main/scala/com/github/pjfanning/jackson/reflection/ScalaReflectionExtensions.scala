@@ -2,7 +2,7 @@ package com.github.pjfanning.jackson.reflection
 
 import co.blocke.scala_reflection.RType
 import co.blocke.scala_reflection.impl.CollectionRType
-import co.blocke.scala_reflection.info.{ClassInfo, MapLikeInfo, ScalaOptionInfo, SeqLikeInfo}
+import co.blocke.scala_reflection.info.{ClassInfo, MapLikeInfo, ScalaOptionInfo}
 import com.fasterxml.jackson.core.{JsonParser, TreeNode}
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.{JavaType, MappingIterator, ObjectMapper, ObjectReader, ObjectWriter}
