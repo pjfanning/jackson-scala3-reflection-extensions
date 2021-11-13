@@ -39,10 +39,9 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
     val mapper = newMapperWithScalaReflectionExtensions
     val w1 = WrappedSeqOptionLong("myText", SeqOptionLong(Seq(Some(100L), Some(100000000000000L), None)))
     val t1 = mapper.writeValueAsString(w1)
-    //TODO next lines fail - probably a bug in jackson-module-scala
-    //val v1 = mapper.readValue[WrappedSeqOptionLong](t1)
-    //v1 shouldEqual w1
-    //v1.wrappedLongs.values.map(useOptionLong).sum shouldEqual w1.wrappedLongs.values.map(useOptionLong).sum
+    val v1 = mapper.readValue[WrappedSeqOptionLong](t1)
+    v1 shouldEqual w1
+    v1.wrappedLongs.values.map(useOptionLong).sum shouldEqual w1.wrappedLongs.values.map(useOptionLong).sum
   }
 
   private def newMapperWithScalaReflectionExtensions: ObjectMapper with ScalaReflectionExtensions = {

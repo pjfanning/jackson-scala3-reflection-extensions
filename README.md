@@ -26,3 +26,14 @@ mapper2.registerModule(DefaultScalaModule)
 
 val instance = mapper.readValue[MyClass](jsonText)
 ```
+
+## Performance
+
+The code to calculate the class details can be slow, as detailed in [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection).
+The results are cached so they won't be recalculated every time you call `readValue`.
+
+If performance worries you then you should consider enabling the compiler plugin.
+
+```scala
+addCompilerPlugin("co.blocke" %% "scala-reflection" % "1.0.0")
+```
