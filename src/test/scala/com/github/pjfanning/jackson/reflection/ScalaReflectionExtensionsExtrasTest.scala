@@ -44,6 +44,15 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
     v1.wrappedLongs.values.map(useOptionLong).sum shouldEqual w1.wrappedLongs.values.map(useOptionLong).sum
   }
 
+  it should "deserialize WrappedOptionSeqLong" in {
+    val mapper = newMapperWithScalaReflectionExtensions
+    val w1 = WrappedOptionSeqLong("myText", OptionSeqLong(Some(Seq(100L, 100000000000000L))))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[WrappedOptionSeqLong](t1)
+    v1 shouldEqual w1
+    v1.wrappedLongs.values.getOrElse(Seq.empty).sum shouldEqual w1.wrappedLongs.values.getOrElse(Seq.empty).sum
+  }
+
   private def newMapperWithScalaReflectionExtensions: ObjectMapper with ScalaReflectionExtensions = {
     JsonMapper.builder().addModule(DefaultScalaModule).build() :: ScalaReflectionExtensions
   }
