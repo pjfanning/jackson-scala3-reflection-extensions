@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.`type`.{ArrayType, CollectionLikeType, Ref
 
 import java.io.{File, InputStream, Reader}
 import java.net.URL
+import scala.annotation.tailrec
 import scala.reflect.ClassTag
 
 object ScalaReflectionExtensions {
@@ -214,11 +215,14 @@ trait ScalaReflectionExtensions {
       classInfo.fields.foreach { fieldInfo =>
         fieldInfo.fieldType match {
           case optionInfo: ScalaOptionInfo =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, optionInfo.optionParamType.infoClass)
+            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(optionInfo.optionParamType).infoClass)
           case mapInfo: MapLikeInfo =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, mapInfo.elementType2.infoClass)
+            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(mapInfo.elementType2).infoClass)
           case seqInfo: CollectionRType =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name, seqInfo.elementType.infoClass)
+            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(seqInfo.elementType).infoClass)
           case _ =>
         }
         fieldInfo.fieldType match {
@@ -228,6 +232,14 @@ trait ScalaReflectionExtensions {
       }
       registeredClasses.add(classInfo.infoClass)
     }
+  }
+
+  @tailrec
+  private def getInnerType(rtype: RType): RType = rtype match {
+    case optionInfo: ScalaOptionInfo => getInnerType(optionInfo.optionParamType)
+    case mapInfo: MapLikeInfo => getInnerType(mapInfo.elementType2)
+    case seqInfo: CollectionRType => getInnerType(seqInfo.elementType)
+    case _ => rtype
   }
 
   private def classFor[T: ClassTag]: Class[T] = {
