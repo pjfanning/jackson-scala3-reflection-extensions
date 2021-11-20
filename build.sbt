@@ -10,7 +10,7 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.0+14-6be45ee8-SNAPSHOT",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.0+17-d1b516ab-SNAPSHOT",
   "com.github.pjfanning" %% "scala3-reflection" % "1.0.1",
   "org.scalatest" %% "scalatest" % "3.2.10" % Test
 )

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.{JsonParser, TreeNode}
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.{JavaType, MappingIterator, ObjectMapper, ObjectReader, ObjectWriter}
 import com.fasterxml.jackson.module.scala.{ClassTagExtensions, JavaTypeable}
-import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospector
+import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospectorModule
 import com.fasterxml.jackson.databind.`type`.{ArrayType, CollectionLikeType, ReferenceType}
 
 import java.io.{File, InputStream, Reader}
@@ -215,13 +215,13 @@ trait ScalaReflectionExtensions {
       classInfo.fields.foreach { fieldInfo =>
         fieldInfo.fieldType match {
           case optionInfo: ScalaOptionInfo =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(optionInfo.optionParamType).infoClass)
           case mapInfo: MapLikeInfo =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(mapInfo.elementType2).infoClass)
           case seqInfo: CollectionRType =>
-            ScalaAnnotationIntrospector.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(seqInfo.elementType).infoClass)
           case _ =>
         }
