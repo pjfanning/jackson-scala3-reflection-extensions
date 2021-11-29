@@ -191,7 +191,7 @@ trait ScalaReflectionExtensions {
     convertValue(fromValue, constructType[T])
   }
 
-  private def constructType[T: JavaTypeable]: JavaType = {
+  def constructType[T: JavaTypeable]: JavaType = {
     val javaType = implicitly[JavaTypeable[T]].asJavaType(getTypeFactory)
     javaType match {
       case rt: ReferenceType =>
