@@ -1,6 +1,6 @@
 name := "jackson-scala3-reflection-extensions"
 
-ThisBuild / version := "2.13.0-SNAPSHOT"
+ThisBuild / version := "2.13.1-SNAPSHOT"
 
 ThisBuild / scalaVersion := "3.0.2"
 
@@ -32,8 +32,7 @@ ThisBuild / githubWorkflowPublish := Seq(
       "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
       "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
       "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
-      "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}",
-      "CI_SNAPSHOT_RELEASE" -> "+publishSigned"
+      "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
     )
   )
 )
