@@ -1,3 +1,5 @@
+import sbtghactions.JavaSpec.Distribution.Zulu
+
 name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
 
@@ -18,7 +20,7 @@ libraryDependencies ++= Seq(
 
 //addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % "1.0.1")
 
-ThisBuild / githubWorkflowJavaVersions := Seq("zulu@1.8")
+ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(
