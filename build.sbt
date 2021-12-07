@@ -8,17 +8,18 @@ ThisBuild / version := "2.13.1-SNAPSHOT"
 ThisBuild / scalaVersion := "3.0.2"
 
 val jacksonVersion = "2.13.0"
+val scala3ReflectionVersion = "1.0.2"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.0+17-d1b516ab-SNAPSHOT",
-  "com.github.pjfanning" %% "scala3-reflection" % "1.0.1",
+  "com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion,
   "org.scalatest" %% "scalatest" % "3.2.10" % Test
 )
 
-//addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % "1.0.1")
+//addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion)
 
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
