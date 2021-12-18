@@ -35,5 +35,5 @@ The results are cached so they won't be recalculated every time you call `readVa
 If performance worries you then you should consider enabling the compiler plugin.
 
 ```scala
-addCompilerPlugin("co.blocke" %% "scala-reflection" % "1.0.0")
+addCompilerPlugin("co.blocke" %% "scala-reflection" % "1.1.1")
 ```
