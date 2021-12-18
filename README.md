@@ -1,6 +1,6 @@
 # jackson-scala3-reflection-extensions
 
-Jackson Scala 3 support that uses [pjfanning/scala3-reflection](https://github.com/pjfanning/scala3-reflection)
+Jackson Scala 3 support that uses [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection)
 to get type info based on Scala 3 [Tasty](https://docs.scala-lang.org/scala3/guides/tasty-overview.html) files.
 
 This lib can be used with [jackson-module-scala](https://github.com/FasterXML/jackson-module-scala). By default,
