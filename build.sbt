@@ -20,6 +20,8 @@ libraryDependencies ++= Seq(
 
 //addCompilerPlugin("co.blocke" %% "scala-reflection" % scalaReflectionVersion)
 
+homepage := Some(url("https://github.com/pjfanning/jackson-scala3-reflection-extensions"))
+
 licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
 developers := List(
