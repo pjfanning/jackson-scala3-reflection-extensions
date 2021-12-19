@@ -1,3 +1,6 @@
+![Build Status](https://github.com/pjfanning/jackson-scala3-reflection-extensions/actions/workflows/ci.yml/badge.svg?branch=main)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.pjfanning/jackson-scala3-reflection-extensions_3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.pjfanning/jackson-scala3-reflection-extensions_3)
+
 # jackson-scala3-reflection-extensions
 
 Jackson Scala 3 support that uses [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection)
