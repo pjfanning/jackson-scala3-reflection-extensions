@@ -5,14 +5,14 @@ organization := "com.github.pjfanning"
 
 ThisBuild / scalaVersion := "3.0.2"
 
-val jacksonVersion = "2.13.0"
+val jacksonVersion = "2.13.1"
 val scalaReflectionVersion = "1.1.1"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.1",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
   //"com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion,
   "co.blocke" %% "scala-reflection" % scalaReflectionVersion,
   "org.scalatest" %% "scalatest" % "3.2.10" % Test
