@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.{DatabindException, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospector
+import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospectorModule
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -277,7 +277,7 @@ class ScalaReflectionExtensionsTest extends AnyFlatSpec with Matchers {
   }
 
   it should "deserialize WrappedOptionLong" in {
-    ScalaAnnotationIntrospector.registerReferencedValueType(classOf[OptionLong], "valueLong", classOf[Long])
+    ScalaAnnotationIntrospectorModule.registerReferencedValueType(classOf[OptionLong], "valueLong", classOf[Long])
     val v1 = mapper.readValue[WrappedOptionLong]("""{"text":"myText","wrappedLong":{"valueLong":151}}""")
     v1 shouldBe WrappedOptionLong("myText", OptionLong(Some(151L)))
     v1.wrappedLong.valueLong.get shouldBe 151L
