@@ -3,8 +3,6 @@ import sbtghactions.JavaSpec.Distribution.Zulu
 name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
 
-ThisBuild / version := "2.13.1-SNAPSHOT"
-
 ThisBuild / scalaVersion := "3.0.2"
 
 val jacksonVersion = "2.13.0"
