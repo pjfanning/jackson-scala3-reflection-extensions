@@ -20,6 +20,12 @@ libraryDependencies ++= Seq(
 
 //addCompilerPlugin("co.blocke" %% "scala-reflection" % scalaReflectionVersion)
 
+licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+
+developers := List(
+  Developer(id="pjfanning", name="PJ Fanning", email="", url=url("https://github.com/pjfanning"))
+)
+
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
