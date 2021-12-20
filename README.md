@@ -23,7 +23,7 @@ val mapperBuilder = JsonMapper.builder()
 
 val mapper = mapperBuilder.build() :: ScalaReflectionExtensions
 
-// this should also work but this Jackson is moving to supporting only creating mapper instances from a builder
+// this should also work but Jackson is moving to supporting only creating mapper instances from a builder
 val mapper2 = new ObjectMapper with ScalaReflectionExtensions
 mapper2.registerModule(DefaultScalaModule)
 
