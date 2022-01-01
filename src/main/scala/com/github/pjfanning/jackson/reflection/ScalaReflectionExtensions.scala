@@ -24,7 +24,7 @@ object ScalaReflectionExtensions {
 trait ScalaReflectionExtensions {
   self: ObjectMapper =>
 
-  private def registeredClasses = scala.collection.mutable.HashSet[Class[_]]()
+  private val registeredClasses = scala.collection.mutable.HashSet[Class[_]]()
 
   /**
    * Method to deserialize JSON content into a Java type, reference
