@@ -19,6 +19,39 @@ object ScalaReflectionExtensions {
   def ::(o: JsonMapper) = new Mixin(o)
   final class Mixin private[ScalaReflectionExtensions](mapper: JsonMapper)
     extends JsonMapper(mapper.rebuild().build()) with ScalaReflectionExtensions
+
+  def registerInnerTypes(classInfo: ClassInfo): Unit = registerInnerTypes(classInfo, Set.empty)
+
+  private def registerInnerTypes(classInfo: ClassInfo, registered: Set[Class[_]]): Unit = {
+    if (!registered.contains(classInfo.infoClass)) {
+      classInfo.fields.foreach { fieldInfo =>
+        fieldInfo.fieldType match {
+          case optionInfo: ScalaOptionInfo =>
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(optionInfo.optionParamType).infoClass)
+          case mapInfo: MapLikeInfo =>
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(mapInfo.elementType2).infoClass)
+          case seqInfo: CollectionRType =>
+            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+              getInnerType(seqInfo.elementType).infoClass)
+          case _ =>
+        }
+        fieldInfo.fieldType match {
+          case fclz: ClassInfo => registerInnerTypes(fclz, registered + classInfo.infoClass)
+          case _ =>
+        }
+      }
+    }
+  }
+
+  @tailrec
+  private def getInnerType(rtype: RType): RType = rtype match {
+    case optionInfo: ScalaOptionInfo => getInnerType(optionInfo.optionParamType)
+    case mapInfo: MapLikeInfo => getInnerType(mapInfo.elementType2)
+    case seqInfo: CollectionRType => getInnerType(seqInfo.elementType)
+    case _ => rtype
+  }
 }
 
 trait ScalaReflectionExtensions {
@@ -201,7 +234,7 @@ trait ScalaReflectionExtensions {
         val clazz = javaType.getRawClass
         if (!registeredClasses.contains(clazz)) {
           RType.of(clazz) match {
-            case classInfo: ClassInfo => registerInnerTypes(classInfo)
+            case classInfo: ClassInfo => registerClassInfo(classInfo)
             case _ =>
           }
         }
@@ -210,36 +243,11 @@ trait ScalaReflectionExtensions {
     javaType
   }
 
-  private def registerInnerTypes(classInfo: ClassInfo): Unit = {
+  private def registerClassInfo(classInfo: ClassInfo): Unit = {
     if (!registeredClasses.contains(classInfo.infoClass)) {
-      classInfo.fields.foreach { fieldInfo =>
-        fieldInfo.fieldType match {
-          case optionInfo: ScalaOptionInfo =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(optionInfo.optionParamType).infoClass)
-          case mapInfo: MapLikeInfo =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(mapInfo.elementType2).infoClass)
-          case seqInfo: CollectionRType =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(seqInfo.elementType).infoClass)
-          case _ =>
-        }
-        fieldInfo.fieldType match {
-          case fclz: ClassInfo => registerInnerTypes(fclz)
-          case _ =>
-        }
-      }
+      ScalaReflectionExtensions.registerInnerTypes(classInfo)
       registeredClasses.add(classInfo.infoClass)
     }
-  }
-
-  @tailrec
-  private def getInnerType(rtype: RType): RType = rtype match {
-    case optionInfo: ScalaOptionInfo => getInnerType(optionInfo.optionParamType)
-    case mapInfo: MapLikeInfo => getInnerType(mapInfo.elementType2)
-    case seqInfo: CollectionRType => getInnerType(seqInfo.elementType)
-    case _ => rtype
   }
 
   private def classFor[T: ClassTag]: Class[T] = {
