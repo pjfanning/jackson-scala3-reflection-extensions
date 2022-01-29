@@ -20,6 +20,11 @@ object ScalaReflectionExtensions {
   final class Mixin private[ScalaReflectionExtensions](mapper: JsonMapper)
     extends JsonMapper(mapper.rebuild().build()) with ScalaReflectionExtensions
 
+  def registerInnerTypes(rtype: RType): Unit = rtype match {
+    case classInfo: ClassInfo => registerInnerTypes(classInfo)
+    case _ =>
+  }
+
   def registerInnerTypes(classInfo: ClassInfo): Unit = registerInnerTypes(classInfo, Set.empty)
 
   private def registerInnerTypes(classInfo: ClassInfo, registered: Set[Class[_]]): Unit = {
