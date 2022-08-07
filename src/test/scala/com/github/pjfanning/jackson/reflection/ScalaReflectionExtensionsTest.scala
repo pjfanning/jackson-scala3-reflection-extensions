@@ -281,7 +281,7 @@ class ScalaReflectionExtensionsTest extends AnyFlatSpec with Matchers {
     val v1 = mapper.readValue[WrappedOptionLong]("""{"text":"myText","wrappedLong":{"valueLong":151}}""")
     v1 shouldBe WrappedOptionLong("myText", OptionLong(Some(151L)))
     v1.wrappedLong.valueLong.get shouldBe 151L
-    //this next call will fail with a Scala unboxing exception unless you call ScalaAnnotationIntrospector.registerReferencedValueType
+    //this next call will fail with a Scala unboxing exception unless you call ScalaAnnotationIntrospectorModule.registerReferencedValueType
     //or use one of the equivalent classes in OptionWithNumberDeserializerTest
     useOptionLong(v1.wrappedLong.valueLong) shouldBe 302L
   }
