@@ -6,7 +6,7 @@ import co.blocke.scala_reflection.info.{ClassInfo, MapLikeInfo, ScalaOptionInfo}
 import com.fasterxml.jackson.core.{JsonParser, TreeNode}
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.{JavaType, MappingIterator, ObjectMapper, ObjectReader, ObjectWriter}
-import com.fasterxml.jackson.module.scala.{ClassTagExtensions, JavaTypeable}
+import com.fasterxml.jackson.module.scala.JavaTypeable
 import com.fasterxml.jackson.module.scala.introspect.ScalaAnnotationIntrospectorModule
 import com.fasterxml.jackson.databind.`type`.{ArrayType, CollectionLikeType, ReferenceType}
 
