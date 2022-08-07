@@ -7,7 +7,7 @@ Jackson Scala 3 support that uses [gzoller/scala-reflection](https://github.com/
 to get type info based on Scala 3 [Tasty](https://docs.scala-lang.org/scala3/guides/tasty-overview.html) files
 (or at compile time, see Performance section).
 
-This lib can be used with [jackson-module-scala](https://github.com/FasterXML/jackson-module-scala). By default,
+This lib is designed to used with [jackson-module-scala](https://github.com/FasterXML/jackson-module-scala). By default,
 jackson-module-scala uses Java reflection to work out the class structure.
 
 `ScalaReflectionExtensions` can be mixed into your ObjectMapper in as a similar way to jackson-module-scala's
