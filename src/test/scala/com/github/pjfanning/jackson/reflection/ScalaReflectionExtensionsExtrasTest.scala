@@ -62,6 +62,16 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
     v1.values.get.flatten.sum shouldEqual w1.values.get.flatten.sum
   }
 
+  // fails due to https://github.com/gzoller/scala-reflection/issues/40
+  it should "deserialize Nested.OptionSeqLong" ignore {
+    val mapper = newMapperWithScalaReflectionExtensions
+    val w1 = Nested.OptionSeqLong(Some(Seq(1000L, 123L)))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[Nested.OptionSeqLong](t1)
+    v1 shouldEqual w1
+    v1.values.get.sum shouldEqual w1.values.get.sum
+  }
+
   private def newMapperWithScalaReflectionExtensions: ObjectMapper with ScalaReflectionExtensions = {
     JsonMapper.builder().addModule(DefaultScalaModule).build() :: ScalaReflectionExtensions
   }
