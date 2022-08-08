@@ -35,6 +35,9 @@ mapper2.registerModule(DefaultScalaModule)
 val instance = mapper.readValue[MyClass](jsonText)
 ```
 
+## Known Issues
+* Currently does not work with inner classes, (eg case classes defined inside Scala Objects) - see https://github.com/gzoller/scala-reflection/issues/40
+
 ## Performance
 
 The code to calculate the class details can be slow, as detailed in [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection).
