@@ -239,20 +239,13 @@ trait ScalaReflectionExtensions {
         val clazz = javaType.getRawClass
         if (!registeredClasses.contains(clazz)) {
           RType.of(clazz) match {
-            case classInfo: ClassInfo => registerClassInfo(classInfo)
+            case classInfo: ClassInfo => ScalaReflectionExtensions.registerInnerTypes(classInfo)
             case _ =>
           }
         }
       }
     }
     javaType
-  }
-
-  private def registerClassInfo(classInfo: ClassInfo): Unit = {
-    if (!registeredClasses.contains(classInfo.infoClass)) {
-      ScalaReflectionExtensions.registerInnerTypes(classInfo)
-      registeredClasses.add(classInfo.infoClass)
-    }
   }
 
   private def classFor[T: ClassTag]: Class[T] = {
