@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.`type`.{ArrayType, CollectionLikeType, Ref
 import java.io.{File, InputStream, Reader}
 import java.net.URL
 import scala.annotation.tailrec
+import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
 
 object ScalaReflectionExtensions {
@@ -62,12 +63,14 @@ object ScalaReflectionExtensions {
 trait ScalaReflectionExtensions {
   self: ObjectMapper =>
 
-  private val registeredClasses = scala.collection.mutable.HashSet[Class[_]]()
+  private val registeredClasses =
+    java.util.Collections.newSetFromMap(
+      new java.util.concurrent.ConcurrentHashMap[Class[_], java.lang.Boolean]).asScala
 
   /**
    * Method to deserialize JSON content into a Java type, reference
    * to which is passed as argument. Type is passed using so-called
-   * "super type token" (see )
+   * "super type token"
    * and specifically needs to be used if the root type is a
    * parameterized (generic) container type.
    */
@@ -122,6 +125,34 @@ trait ScalaReflectionExtensions {
 
   def readValue[T: JavaTypeable](src: Array[Byte], offset: Int, len: Int): T = {
     readValue(src, offset, len, constructType[T])
+  }
+
+  def readValue[T: JavaTypeable](src: File, rType: RType): T = {
+    readValue(src, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](src: URL, rType: RType): T = {
+    readValue(src, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](content: String, rType: RType): T = {
+    readValue(content, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](src: Reader, rType: RType): T = {
+    readValue(src, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](src: InputStream, rType: RType): T = {
+    readValue(src, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](src: Array[Byte], rType: RType): T = {
+    readValue(src, constructType[T](rType))
+  }
+
+  def readValue[T: JavaTypeable](src: Array[Byte], offset: Int, len: Int, rType: RType): T = {
+    readValue(src, offset, len, constructType[T](rType))
   }
 
   def updateValue[T: JavaTypeable](valueToUpdate: T, src: File): T = {
@@ -242,6 +273,19 @@ trait ScalaReflectionExtensions {
             case classInfo: ClassInfo => ScalaReflectionExtensions.registerInnerTypes(classInfo)
             case _ =>
           }
+        }
+      }
+    }
+    javaType
+  }
+
+  private def constructType[T: JavaTypeable](rType: RType): JavaType = {
+    val javaType = implicitly[JavaTypeable[T]].asJavaType(getTypeFactory)
+    rType match {
+      case classInfo: ClassInfo => {
+        val clazz = javaType.getRawClass
+        if (!registeredClasses.contains(clazz)) {
+          ScalaReflectionExtensions.registerInnerTypes(classInfo)
         }
       }
     }

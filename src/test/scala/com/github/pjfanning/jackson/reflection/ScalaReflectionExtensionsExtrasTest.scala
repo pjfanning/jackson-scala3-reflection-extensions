@@ -1,5 +1,6 @@
 package com.github.pjfanning.jackson.reflection
 
+import co.blocke.scala_reflection.RType
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
@@ -60,6 +61,24 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers {
     val v1 = mapper.readValue[OptionSeqOptionLong](t1)
     v1 shouldEqual w1
     v1.values.get.flatten.sum shouldEqual w1.values.get.flatten.sum
+  }
+
+  it should "deserialize Nested.OptionLong (with RType)" in {
+    val mapper = newMapperWithScalaReflectionExtensions
+    val w1 = Nested.OptionLong(Some(1000L))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[Nested.OptionLong](t1, RType.of[Nested.OptionLong])
+    v1 shouldEqual w1
+    useOptionLong(v1.valueLong) shouldEqual useOptionLong(w1.valueLong)
+  }
+
+  it should "deserialize Nested.OptionSeqLong (with RType)" in {
+    val mapper = newMapperWithScalaReflectionExtensions
+    val w1 = Nested.OptionSeqLong(Some(Seq(1000L, 123L)))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[Nested.OptionSeqLong](t1)
+    v1 shouldEqual w1
+    v1.values.get.sum shouldEqual w1.values.get.sum
   }
 
   //fails due to https://github.com/gzoller/scala-reflection/issues/40
