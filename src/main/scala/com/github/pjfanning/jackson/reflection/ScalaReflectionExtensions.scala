@@ -238,15 +238,9 @@ trait ScalaReflectionExtensions {
       case _ => {
         val clazz = javaType.getRawClass
         if (!registeredClasses.contains(clazz)) {
-          try {
-            RType.of(clazz) match {
-              case classInfo: ClassInfo => ScalaReflectionExtensions.registerInnerTypes(classInfo)
-              case _ =>
-            }
-          } catch {
-            case noSuchElementException: NoSuchElementException => {
-              // ignore for now - relates to https://github.com/gzoller/scala-reflection/issues/40
-            }
+          RType.of(clazz) match {
+            case classInfo: ClassInfo => ScalaReflectionExtensions.registerInnerTypes(classInfo)
+            case _ =>
           }
         }
       }
