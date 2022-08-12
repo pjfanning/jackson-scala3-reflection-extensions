@@ -17,7 +17,7 @@ jackson-module-scala uses Java reflection to work out the class structure.
 and [ScalaObjectMapper](https://github.com/FasterXML/jackson-module-scala/blob/2.14/src/main/scala-2.%2B/com/fasterxml/jackson/module/scala/ScalaObjectMapper.scala).
 
 ```scala
-libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.13.2"
+libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.13.3"
 ```
 
 ```scala
