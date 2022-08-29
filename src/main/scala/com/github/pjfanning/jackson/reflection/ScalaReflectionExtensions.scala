@@ -17,9 +17,14 @@ import scala.collection.JavaConverters._
 import scala.reflect.ClassTag
 
 object ScalaReflectionExtensions {
-  def ::(o: JsonMapper) = new Mixin(o)
-  final class Mixin private[ScalaReflectionExtensions](mapper: JsonMapper)
-    extends JsonMapper(mapper.rebuild().build()) with ScalaReflectionExtensions
+  def ::(o: JsonMapper): JsonMapper with ScalaReflectionExtensions = new JsonMapperMixin(o)
+  def ::(o: ObjectMapper): ObjectMapper with ScalaReflectionExtensions = new ObjectMapperMixin(o)
+
+  final class JsonMapperMixin private[ScalaReflectionExtensions](mapper: JsonMapper)
+    extends JsonMapper(mapper) with ScalaReflectionExtensions
+
+  final class ObjectMapperMixin private[ScalaReflectionExtensions](mapper: ObjectMapper)
+    extends ObjectMapper(mapper) with ScalaReflectionExtensions
 
   def registerInnerTypes(rtype: RType): Unit = rtype match {
     case classInfo: ClassInfo => registerInnerTypes(classInfo)
