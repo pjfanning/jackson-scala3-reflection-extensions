@@ -30,6 +30,8 @@ developers := List(
   Developer(id="pjfanning", name="PJ Fanning", email="", url=url("https://github.com/pjfanning"))
 )
 
+Test / parallelExecution := false
+
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(
