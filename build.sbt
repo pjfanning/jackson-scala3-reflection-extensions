@@ -4,7 +4,7 @@ name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
 description := "Jackson scala3 support that uses gzoller/scala-reflection to get type info"
 
-ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / scalaVersion := "3.2.0"
 
 val jacksonVersion = "2.13.3"
 val scalaReflectionVersion = "1.1.4"
