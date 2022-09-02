@@ -38,13 +38,13 @@ object ScalaReflectionExtensions {
       classInfo.fields.foreach { fieldInfo =>
         fieldInfo.fieldType match {
           case optionInfo: ScalaOptionInfo =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(optionInfo.optionParamType).infoClass)
           case mapInfo: MapLikeInfo =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(mapInfo.elementType2).infoClass)
           case seqInfo: CollectionRType =>
-            ScalaAnnotationIntrospectorModule.registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
+            registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(seqInfo.elementType).infoClass)
           case _ =>
         }
@@ -62,6 +62,12 @@ object ScalaReflectionExtensions {
     case mapInfo: MapLikeInfo => getInnerType(mapInfo.elementType2)
     case seqInfo: CollectionRType => getInnerType(seqInfo.elementType)
     case _ => rtype
+  }
+
+  private def registerReferencedValueType(clazz: Class[_], fieldName: String, referencedType: Class[_]): Unit = {
+    if (referencedType.isPrimitive) {
+      ScalaAnnotationIntrospectorModule.registerReferencedValueType(clazz, fieldName, referencedType)
+    }
   }
 }
 
