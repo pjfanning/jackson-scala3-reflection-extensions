@@ -27,7 +27,7 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers with
     useOptionLong(v1.wrappedLong.valueLong) shouldBe 302L
   }
 
-  it should "deserialize WrappedOptionLongWithDefault" ignore {
+  it should "deserialize WrappedOptionLongWithDefault" in {
     val mapper = newMapperWithScalaReflectionExtensions
     val v1 = mapper.readValue[WrappedOptionLongWithDefault]("""{"text":"myText","wrappedLong":{"valueLong":151}}""")
     v1 shouldBe WrappedOptionLongWithDefault("myText", OptionLongWithDefault(Some(151L)))
