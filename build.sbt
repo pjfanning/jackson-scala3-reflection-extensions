@@ -6,14 +6,14 @@ description := "Jackson scala3 support that uses gzoller/scala-reflection to get
 
 ThisBuild / scalaVersion := "3.2.0"
 
-val jacksonVersion = "2.13.3"
+val jacksonVersion = "2.13.4"
 val scalaReflectionVersion = "1.1.4"
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+//resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.3+27-8e264e75-SNAPSHOT",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
   //"com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion,
   "co.blocke" %% "scala-reflection" % scalaReflectionVersion,
   "org.scala-lang" %% "scala3-staging" % scalaVersion.value,
