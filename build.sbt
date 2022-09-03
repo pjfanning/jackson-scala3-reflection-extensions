@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   //"com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion,
   "co.blocke" %% "scala-reflection" % scalaReflectionVersion,
   "org.scala-lang" %% "scala3-staging" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.2.13" % Test
+  "org.scalatest" %% "scalatest" % "3.2.11" % Test
 )
 
 addCompilerPlugin("co.blocke" %% "scala-reflection" % scalaReflectionVersion)
