@@ -46,9 +46,6 @@ object ScalaReflectionExtensions {
           case seqInfo: CollectionRType =>
             registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
               getInnerType(seqInfo.elementType).infoClass)
-          case _ =>
-        }
-        fieldInfo.fieldType match {
           case fclz: ClassInfo => registerInnerTypes(fclz, registered + classInfo.infoClass)
           case _ =>
         }
