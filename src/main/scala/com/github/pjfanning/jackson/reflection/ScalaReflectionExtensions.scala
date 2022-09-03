@@ -35,18 +35,19 @@ object ScalaReflectionExtensions {
 
   private def registerInnerTypes(classInfo: ClassInfo, registered: Set[Class[_]]): Unit = {
     if (!registered.contains(classInfo.infoClass)) {
+      val updatedRegistered = registered + classInfo.infoClass
       classInfo.fields.foreach { fieldInfo =>
         fieldInfo.fieldType match {
           case optionInfo: ScalaOptionInfo =>
             registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(optionInfo.optionParamType).infoClass)
+              getInnerType(optionInfo.optionParamType), updatedRegistered)
           case mapInfo: MapLikeInfo =>
             registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(mapInfo.elementType2).infoClass)
+              getInnerType(mapInfo.elementType2), updatedRegistered)
           case seqInfo: CollectionRType =>
             registerReferencedValueType(classInfo.infoClass, fieldInfo.name,
-              getInnerType(seqInfo.elementType).infoClass)
-          case fclz: ClassInfo => registerInnerTypes(fclz, registered + classInfo.infoClass)
+              getInnerType(seqInfo.elementType), updatedRegistered)
+          case fclz: ClassInfo => registerInnerTypes(fclz, updatedRegistered)
           case _ =>
         }
       }
@@ -61,9 +62,16 @@ object ScalaReflectionExtensions {
     case _ => rtype
   }
 
-  private def registerReferencedValueType(clazz: Class[_], fieldName: String, referencedType: Class[_]): Unit = {
-    if (referencedType.isPrimitive) {
-      ScalaAnnotationIntrospectorModule.registerReferencedValueType(clazz, fieldName, referencedType)
+  private def registerReferencedValueType(clazz: Class[_], fieldName: String, referencedType: RType,
+                                          registeredClasses: Set[Class[_]]): Unit = {
+    val referenceTypeClass = referencedType.infoClass
+    if (referenceTypeClass.isPrimitive) {
+      ScalaAnnotationIntrospectorModule.registerReferencedValueType(clazz, fieldName, referenceTypeClass)
+    } else {
+      referencedType match {
+        case classInfo: ClassInfo => registerInnerTypes(classInfo, registeredClasses)
+        case _ =>
+      }
     }
   }
 }
