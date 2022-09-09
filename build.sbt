@@ -30,6 +30,14 @@ developers := List(
   Developer(id="pjfanning", name="PJ Fanning", email="", url=url("https://github.com/pjfanning"))
 )
 
+// build.properties
+Compile / resourceGenerators += Def.task {
+  val file = (Compile / resourceManaged).value / "com" / "github" / "pjfanning" / "jackson" / "reflection" / "build.properties"
+  val contents = "version=%s\ngroupId=%s\nartifactId=%s\n".format(version.value, organization.value, name.value)
+  IO.write(file, contents)
+  Seq(file)
+}.taskValue
+
 Test / parallelExecution := false
 
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
