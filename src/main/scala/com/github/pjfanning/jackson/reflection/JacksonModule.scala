@@ -37,7 +37,7 @@ trait JacksonModule extends Module {
 
   def getModuleName = "JacksonModule"
 
-  def version = JacksonModule.version
+  override def version() = JacksonModule.version
 
   def setupModule(context: SetupContext): Unit = {
     initializers.result().foreach(_ apply context)
