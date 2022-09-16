@@ -5,25 +5,35 @@ import co.blocke.scala_reflection.info.{ObjectInfo, ScalaClassInfo, SealedTraitI
 import com.fasterxml.jackson.core.Version
 import com.fasterxml.jackson.databind.introspect.{Annotated, JacksonAnnotationIntrospector}
 import com.fasterxml.jackson.databind.jsontype.NamedType
+import org.slf4j.LoggerFactory
 
 import scala.jdk.CollectionConverters.*
+import scala.util.control.NonFatal
 
 class ScalaReflectionAnnotationIntrospector extends JacksonAnnotationIntrospector {
+  private val logger = LoggerFactory.getLogger(classOf[ScalaReflectionAnnotationIntrospector])
 
   override def version(): Version = JacksonModule.version
 
   override def findSubtypes(a: Annotated): java.util.List[NamedType] = {
-    val rtype = RType.of(a.getRawType)
-    rtype match {
-      case traitInfo: SealedTraitInfo =>
-        traitInfo.children
-          .map(ct => new NamedType(getClass(ct)))
-          .toSeq.asJava
-      case classInfo: ScalaClassInfo =>
-        classInfo.children
-          .map(ct => new NamedType(getClass(ct)))
-          .toSeq.asJava
-      case _ => None.orNull
+    try {
+      val rtype = RType.of(a.getRawType)
+      rtype match {
+        case traitInfo: SealedTraitInfo =>
+          traitInfo.children
+            .map(ct => new NamedType(getClass(ct)))
+            .toSeq.asJava
+        case classInfo: ScalaClassInfo =>
+          classInfo.children
+            .map(ct => new NamedType(getClass(ct)))
+            .toSeq.asJava
+        case _ => None.orNull
+      }
+    } catch {
+      case NonFatal(t) => {
+        logger.warn(s"Failed to findSubtypes in ${a.getRawType}: $t")
+        None.orNull
+      }
     }
   }
 
