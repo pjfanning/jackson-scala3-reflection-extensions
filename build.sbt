@@ -7,20 +7,19 @@ description := "Jackson scala3 support that uses gzoller/scala-reflection to get
 ThisBuild / scalaVersion := "3.2.0"
 
 val jacksonVersion = "2.13.4"
-val scalaReflectionVersion = "1.1.4"
+val scalaReflectionVersion = "1.2.0-SNAPSHOT"
 
-//resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
-  //"com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion,
-  "co.blocke" %% "scala-reflection" % scalaReflectionVersion,
+  "com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion,
   "org.scala-lang" %% "scala3-staging" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "3.2.13" % Test
 )
 
-addCompilerPlugin("co.blocke" %% "scala-reflection" % scalaReflectionVersion)
+addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % scalaReflectionVersion)
 
 homepage := Some(url("https://github.com/pjfanning/jackson-scala3-reflection-extensions"))
 

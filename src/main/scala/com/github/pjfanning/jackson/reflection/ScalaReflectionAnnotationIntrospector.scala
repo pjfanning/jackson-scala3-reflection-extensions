@@ -1,7 +1,7 @@
 package com.github.pjfanning.jackson.reflection
 
 import co.blocke.scala_reflection.RType
-import co.blocke.scala_reflection.info.{ObjectInfo, SealedTraitInfo}
+import co.blocke.scala_reflection.info.{ObjectInfo, ScalaClassInfo, SealedTraitInfo}
 import com.fasterxml.jackson.core.Version
 import com.fasterxml.jackson.databind.introspect.{Annotated, JacksonAnnotationIntrospector}
 import com.fasterxml.jackson.databind.jsontype.NamedType
@@ -17,6 +17,10 @@ class ScalaReflectionAnnotationIntrospector extends JacksonAnnotationIntrospecto
     rtype match {
       case traitInfo: SealedTraitInfo =>
         traitInfo.children
+          .map(ct => new NamedType(getClass(ct)))
+          .toSeq.asJava
+      case classInfo: ScalaClassInfo =>
+        classInfo.children
           .map(ct => new NamedType(getClass(ct)))
           .toSeq.asJava
       case _ => None.orNull
