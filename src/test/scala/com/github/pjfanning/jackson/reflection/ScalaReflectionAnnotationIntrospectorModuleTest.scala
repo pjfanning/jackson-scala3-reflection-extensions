@@ -36,12 +36,14 @@ class ScalaReflectionAnnotationIntrospectorModuleTest extends AnyFlatSpec with M
       .addModule(ScalaObjectDeserializerModule) //this non-default module prevents duplicate scala objects being created
       .addModule(ScalaReflectAnnotationIntrospectorModule)
       .build()
-    val petOwner = PetOwner("Seoirse", new Cat("Trixie"))
+    val cat = new Cat("Trixie", 5)
+    val petOwner = PetOwner("Seoirse", cat)
     val json = mapper.writeValueAsString(petOwner)
     val petOwner2 = mapper.readValue(json, classOf[PetOwner])
     petOwner2.owner shouldEqual petOwner.owner
-    petOwner2.pet.animalType shouldEqual petOwner.pet.animalType
-    petOwner2.pet.name shouldEqual petOwner.pet.name
+    petOwner2.pet.name shouldEqual cat.name
+    petOwner2.pet shouldBe a[Cat]
+    petOwner2.pet.asInstanceOf[Cat].age shouldEqual cat.age
   }
 
   it should "return version" in {
