@@ -296,9 +296,9 @@ trait ScalaReflectionExtensions {
   }
 
   private def constructType[T: JavaTypeable](rType: RType): JavaType = {
-    val javaType = implicitly[JavaTypeable[T]].asJavaType(getTypeFactory)
     rType match {
       case classInfo: ClassInfo => {
+        val javaType = implicitly[JavaTypeable[T]].asJavaType(getTypeFactory)
         val clazz = javaType.getRawClass
         if (!registeredClasses.contains(clazz)) {
           ScalaReflectionExtensions.registerInnerTypes(classInfo)
