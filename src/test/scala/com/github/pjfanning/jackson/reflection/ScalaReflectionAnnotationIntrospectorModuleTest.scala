@@ -47,7 +47,6 @@ class ScalaReflectionAnnotationIntrospectorModuleTest extends AnyFlatSpec with M
   }
 
   it should "return version" in {
-    val introspector = new ScalaReflectionAnnotationIntrospector
     ScalaReflectAnnotationIntrospectorModule.version() shouldEqual JacksonModule.version
   }
 }
