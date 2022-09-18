@@ -285,7 +285,7 @@ trait ScalaReflectionExtensions {
       case _ => {
         val clazz = javaType.getRawClass
         if (!registeredClasses.contains(clazz)) {
-          RType.of(clazz) match {
+          RTypeCache.getRType(clazz) match {
             case classInfo: ClassInfo => ScalaReflectionExtensions.registerInnerTypes(classInfo)
             case _ =>
           }

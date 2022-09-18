@@ -17,7 +17,7 @@ class ScalaReflectionAnnotationIntrospector extends JacksonAnnotationIntrospecto
 
   override def findSubtypes(a: Annotated): java.util.List[NamedType] = {
     try {
-      val rtype = RType.of(a.getRawType)
+      val rtype = RTypeCache.getRType(a.getRawType)
       rtype match {
         case traitInfo: SealedTraitInfo =>
           traitInfo.children
