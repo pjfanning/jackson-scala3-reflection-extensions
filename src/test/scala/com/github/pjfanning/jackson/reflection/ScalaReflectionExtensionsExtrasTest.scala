@@ -117,7 +117,7 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers with
   }
 
   it should "deserialize DataExampleClass" in {
-    val mapper = newMapperWithScalaReflectExtensions
+    val mapper = newMapperWithScalaReflectionExtensions
     val w1 = DataExampleClass(CustomCollection(Seq(FeatureExample(Some(ExampleProperties(1, 1.23))))))
     val t1 = mapper.writeValueAsString(w1)
     val v1 = mapper.readValue[DataExampleClass](t1)
