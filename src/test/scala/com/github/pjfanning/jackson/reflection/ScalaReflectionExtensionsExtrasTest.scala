@@ -116,6 +116,14 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers with
     v1.values.get.sum shouldEqual w1.values.get.sum
   }
 
+  it should "deserialize DataExampleClass" in {
+    val mapper = newMapperWithScalaReflectExtensions
+    val w1 = DataExampleClass(CustomCollection(Seq(FeatureExample(Some(ExampleProperties(1, 1.23))))))
+    val t1 = mapper.writeValueAsString(w1)
+    val v1 = mapper.readValue[DataExampleClass](t1)
+    v1 shouldEqual w1
+  }
+
   //fails due to https://github.com/gzoller/scala-reflection/issues/40
   it should "deserialize Nested.OptionLong" ignore {
     val mapper = newMapperWithScalaReflectionExtensions
