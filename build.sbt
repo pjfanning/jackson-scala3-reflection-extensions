@@ -6,7 +6,7 @@ description := "Jackson scala3 support that uses gzoller/scala-reflection to get
 
 ThisBuild / scalaVersion := "3.2.0"
 
-val jacksonVersion = "2.14.0-rc1"
+val jacksonVersion = "2.14.0"
 val scala3ReflectionVersion = "1.2.0"
 
 //resolvers ++= Resolver.sonatypeOssRepos("snapshots")
@@ -16,9 +16,9 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
   "com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion,
   "org.scala-lang" %% "scala3-staging" % scalaVersion.value,
-  "org.slf4j" % "slf4j-api" % "1.7.36",
-  "org.scalatest" %% "scalatest" % "3.2.13" % Test,
-  "org.slf4j" % "slf4j-simple" % "1.7.36" % Test
+  "org.slf4j" % "slf4j-api" % "2.0.3",
+  "org.scalatest" %% "scalatest" % "3.2.14" % Test,
+  "org.slf4j" % "slf4j-simple" % "2.0.3" % Test
 )
 
 addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion)
