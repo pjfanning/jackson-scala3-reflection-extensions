@@ -124,8 +124,7 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers with
     v1 shouldEqual w1
   }
 
-  //fails due to https://github.com/gzoller/scala-reflection/issues/40
-  it should "deserialize Nested.OptionLong" ignore {
+  it should "deserialize Nested.OptionLong" in {
     val mapper = newMapperWithScalaReflectionExtensions
     val w1 = Nested.OptionLong(Some(1000L))
     val t1 = mapper.writeValueAsString(w1)
@@ -134,8 +133,7 @@ class ScalaReflectionExtensionsExtrasTest extends AnyFlatSpec with Matchers with
     useOptionLong(v1.valueLong) shouldEqual useOptionLong(w1.valueLong)
   }
 
-  //fails due to https://github.com/gzoller/scala-reflection/issues/40
-  it should "deserialize Nested.OptionSeqLong" ignore {
+  it should "deserialize Nested.OptionSeqLong" in {
     val mapper = newMapperWithScalaReflectionExtensions
     val w1 = Nested.OptionSeqLong(Some(Seq(1000L, 123L)))
     val t1 = mapper.writeValueAsString(w1)
