@@ -6,7 +6,7 @@ description := "Jackson scala3 support that uses gzoller/scala-reflection to get
 
 ThisBuild / scalaVersion := "3.2.2"
 
-val jacksonVersion = "2.15.0"
+val jacksonVersion = "2.15.1"
 val scala3ReflectionVersion = "1.2.0"
 
 //resolvers ++= Resolver.sonatypeOssRepos("snapshots")
