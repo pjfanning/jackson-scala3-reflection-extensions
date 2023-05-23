@@ -45,6 +45,7 @@ ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(
   RefPredicate.Equals(Ref.Branch("main")),
+  RefPredicate.Equals(Ref.Branch("scala-3.3")),
   RefPredicate.StartsWith(Ref.Tag("v"))
 )
 
