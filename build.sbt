@@ -2,7 +2,7 @@ import org.typelevel.sbt.gha.JavaSpec.Distribution.Zulu
 
 name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
-description := "Jackson scala3 support that uses gzoller/scala-reflection to get type info"
+description := "Jackson scala3 support that uses scala3-reflection to get type info"
 
 ThisBuild / scalaVersion := "3.2.2"
 
