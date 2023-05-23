@@ -3,7 +3,7 @@
 
 # jackson-scala3-reflection-extensions
 
-Jackson Scala 3 support that uses [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection)
+Jackson Scala 3 support that uses [scala3-reflection](https://github.com/pjfanning/scala3-reflection)
 to get type info based on Scala 3 [Tasty](https://docs.scala-lang.org/scala3/guides/tasty-overview.html) files
 (or at compile time, see Performance section).
 
@@ -19,7 +19,7 @@ jackson-module-scala uses Java reflection to work out the class structure.
 and [ScalaObjectMapper](https://github.com/FasterXML/jackson-module-scala/blob/2.14/src/main/scala-2.%2B/com/fasterxml/jackson/module/scala/ScalaObjectMapper.scala).
 
 ```scala
-libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.14.0"
+libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.15.1"
 ```
 
 ```scala
