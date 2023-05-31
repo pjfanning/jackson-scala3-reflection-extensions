@@ -7,9 +7,9 @@ description := "Jackson scala3 support that uses scala3-reflection to get type i
 ThisBuild / scalaVersion := "3.2.2"
 
 val jacksonVersion = "2.15.1"
-val scala3ReflectionVersion = "1.2.0+6-1247f76c-SNAPSHOT"
+val scala3ReflectionVersion = "1.2.0"
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+//resolvers ++= Resolver.sonatypeOssRepos("snapshots")
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonVersion,
