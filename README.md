@@ -9,6 +9,8 @@ to get type info based on Scala 3 [Tasty](https://docs.scala-lang.org/scala3/gui
 
 The problem that this lib solves in described in this [FAQ entry](https://github.com/FasterXML/jackson-module-scala/wiki/FAQ#deserializing-optionint-seqint-and-other-primitive-challenges).
 
+The lib can also auto-discover subtypes if you are using Jackson's polymorphism support ([@JsonTypeInfo annotation](https://www.baeldung.com/jackson-inheritance#2-per-class-annotations)). You can omit the `@JsonSubTypes` if you dealing with sealed traits.
+
 See [jackson-scala-reflect-extensions](https://github.com/pjfanning/jackson-scala-reflect-extensions) for the Scala 2 equivalent.
 
 This lib is designed to used with [jackson-module-scala](https://github.com/FasterXML/jackson-module-scala). By default,
