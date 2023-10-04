@@ -3,11 +3,13 @@
 
 # jackson-scala3-reflection-extensions
 
-Jackson Scala 3 support that uses [gzoller/scala-reflection](https://github.com/gzoller/scala-reflection)
+Jackson Scala 3 support that uses [scala3-reflection](https://github.com/pjfanning/scala3-reflection)
 to get type info based on Scala 3 [Tasty](https://docs.scala-lang.org/scala3/guides/tasty-overview.html) files
 (or at compile time, see Performance section).
 
 The problem that this lib solves in described in this [FAQ entry](https://github.com/FasterXML/jackson-module-scala/wiki/FAQ#deserializing-optionint-seqint-and-other-primitive-challenges).
+
+The lib can also auto-discover subtypes if you are using Jackson's polymorphism support ([@JsonTypeInfo annotation](https://www.baeldung.com/jackson-inheritance#2-per-class-annotations)). You can omit the `@JsonSubTypes` if you dealing with sealed traits.
 
 See [jackson-scala-reflect-extensions](https://github.com/pjfanning/jackson-scala-reflect-extensions) for the Scala 2 equivalent.
 
@@ -19,7 +21,13 @@ jackson-module-scala uses Java reflection to work out the class structure.
 and [ScalaObjectMapper](https://github.com/FasterXML/jackson-module-scala/blob/2.14/src/main/scala-2.%2B/com/fasterxml/jackson/module/scala/ScalaObjectMapper.scala).
 
 ```scala
-libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.14.0"
+libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.15.1"
+```
+
+Scala 3.3+ users should add this dependency:
+
+```scala
+libraryDependencies += "com.github.pjfanning" %% "scala3-reflection" % "1.3.0"
 ```
 
 ```scala
