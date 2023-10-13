@@ -17,8 +17,8 @@ This lib is designed to used with [jackson-module-scala](https://github.com/Fast
 jackson-module-scala uses Java reflection to work out the class structure.
 
 `ScalaReflectionExtensions` can be mixed into your ObjectMapper in as a similar way to jackson-module-scala's
-[ClassTagExtensions](https://github.com/FasterXML/jackson-module-scala/blob/2.14/src/main/scala/com/fasterxml/jackson/module/scala/ClassTagExtensions.scala)
-and [ScalaObjectMapper](https://github.com/FasterXML/jackson-module-scala/blob/2.14/src/main/scala-2.%2B/com/fasterxml/jackson/module/scala/ScalaObjectMapper.scala).
+[ClassTagExtensions](https://github.com/FasterXML/jackson-module-scala/blob/2.15/src/main/scala/com/fasterxml/jackson/module/scala/ClassTagExtensions.scala)
+and [ScalaObjectMapper](https://github.com/FasterXML/jackson-module-scala/blob/2.15/src/main/scala-2.%2B/com/fasterxml/jackson/module/scala/ScalaObjectMapper.scala).
 
 ```scala
 libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-extensions" % "2.15.1"
@@ -27,7 +27,7 @@ libraryDependencies += "com.github.pjfanning" %% "jackson-scala3-reflection-exte
 Scala 3.3+ users should add this dependency:
 
 ```scala
-libraryDependencies += "com.github.pjfanning" %% "scala3-reflection" % "1.3.0"
+libraryDependencies += "com.github.pjfanning" %% "scala3-reflection" % "1.3.1"
 ```
 
 ```scala
@@ -46,9 +46,6 @@ mapper2.registerModule(DefaultScalaModule)
 
 val instance = mapper.readValue[MyClass](jsonText)
 ```
-
-## Known Issues
-* Currently does not work with inner classes, (eg case classes defined inside Scala Objects) - see https://github.com/gzoller/scala-reflection/issues/40
 
 ## Performance
 
