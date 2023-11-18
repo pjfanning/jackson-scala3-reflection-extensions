@@ -1,4 +1,4 @@
-import org.typelevel.sbt.gha.JavaSpec.Distribution.Zulu
+import sbtghactions.JavaSpec.Distribution.Zulu
 
 name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
@@ -6,7 +6,7 @@ description := "Jackson scala3 support that uses scala3-reflection to get type i
 
 ThisBuild / scalaVersion := "3.3.1"
 
-val jacksonVersion = "2.16.0-SNAPSHOT"
+val jacksonVersion = "2.16.0"
 val scala3ReflectionVersion = "1.3.1"
 
 resolvers ++= Resolver.sonatypeOssRepos("snapshots")
@@ -43,6 +43,7 @@ Test / parallelExecution := false
 
 ThisBuild / tlSonatypeUseLegacyHost := true
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
+ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(
   RefPredicate.Equals(Ref.Branch("main")),
