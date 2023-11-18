@@ -41,7 +41,6 @@ Compile / resourceGenerators += Def.task {
 
 Test / parallelExecution := false
 
-ThisBuild / tlSonatypeUseLegacyHost := true
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec(Zulu, "8"))
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test")))
