@@ -3,7 +3,7 @@ package com.github.pjfanning.jackson.reflection
 import co.blocke.scala_reflection.RType
 import co.blocke.scala_reflection.info.{ObjectInfo, ScalaClassInfo, SealedTraitInfo}
 import com.fasterxml.jackson.core.Version
-import com.fasterxml.jackson.databind.introspect.{Annotated, JacksonAnnotationIntrospector}
+import com.fasterxml.jackson.databind.introspect.{Annotated, AnnotatedClass, JacksonAnnotationIntrospector}
 import com.fasterxml.jackson.databind.jsontype.NamedType
 import org.slf4j.LoggerFactory
 
@@ -15,28 +15,30 @@ class ScalaReflectionAnnotationIntrospector extends JacksonAnnotationIntrospecto
 
   override def version(): Version = JacksonModule.version
 
-  override def findSubtypes(a: Annotated): java.util.List[NamedType] = {
-    try {
-      val rtype = RTypeCache.getRType(a.getRawType)
-      rtype match {
-        case traitInfo: SealedTraitInfo =>
-          traitInfo.children
-            .map(ct => new NamedType(getClass(ct)))
-            .toSeq.asJava
-        case classInfo: ScalaClassInfo =>
-          classInfo.children
-            .map(ct => new NamedType(getClass(ct)))
-            .toSeq.asJava
-        case _ => None.orNull
+  override def findSubtypes(ann: Annotated): java.util.List[NamedType] = ann match {
+    case ac: AnnotatedClass =>
+      try {
+        val rtype = RTypeCache.getRType(ac.getRawType)
+        rtype match {
+          case traitInfo: SealedTraitInfo =>
+            traitInfo.children
+              .map(ct => new NamedType(getClass(ct)))
+              .toSeq.asJava
+          case classInfo: ScalaClassInfo =>
+            classInfo.children
+              .map(ct => new NamedType(getClass(ct)))
+              .toSeq.asJava
+          case _ => None.orNull
+        }
+      } catch {
+        case NonFatal(t) => {
+          logger.warn(s"Failed to findSubtypes in ${ac.getRawType}: $t")
+          None.orNull
+        }
       }
-    } catch {
-      case NonFatal(t) => {
-        logger.warn(s"Failed to findSubtypes in ${a.getRawType}: $t")
-        None.orNull
-      }
-    }
+    case _ => None.orNull
   }
-
+  
   private def getClass(rtype: RType): Class[_] = rtype match {
     case objectInfo: ObjectInfo => getCompanionObjectClass(objectInfo.infoClass)
     case rt => rt.infoClass
