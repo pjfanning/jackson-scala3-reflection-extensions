@@ -4,9 +4,9 @@ name := "jackson-scala3-reflection-extensions"
 organization := "com.github.pjfanning"
 description := "Jackson scala3 support that uses scala3-reflection to get type info"
 
-ThisBuild / scalaVersion := "3.3.1"
+ThisBuild / scalaVersion := "3.3.5"
 
-val jacksonVersion = "2.16.0"
+val jacksonVersion = "2.18.3"
 val scala3ReflectionVersion = "1.3.1"
 
 resolvers ++= Resolver.sonatypeOssRepos("snapshots")
@@ -16,9 +16,9 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion,
   "com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion,
   "org.scala-lang" %% "scala3-staging" % scalaVersion.value,
-  "org.slf4j" % "slf4j-api" % "2.0.9",
-  "org.scalatest" %% "scalatest" % "3.2.17" % Test,
-  "org.slf4j" % "slf4j-simple" % "2.0.9" % Test
+  "org.slf4j" % "slf4j-api" % "2.0.17",
+  "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+  "org.slf4j" % "slf4j-simple" % "2.0.17" % Test
 )
 
 addCompilerPlugin("com.github.pjfanning" %% "scala3-reflection" % scala3ReflectionVersion)
